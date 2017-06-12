@@ -31,9 +31,29 @@ void apply_visitor(Visitor&& visitor, const Visitable& visitable)
         typename Visitable::base_visitor__>(visitor);
     visitable.accept(wrapper);
 }
+
+template<typename Visitor>
+struct apply_visitor_delayed
+{
+    apply_visitor_delayed(Visitor& visitor)
+        : visitor(visitor) {}
+    
+    template<typename Visitable>
+    void operator()(Visitable&& visitable) const
+    {
+        return apply_visitor(visitor, visitable);
+    }
+    Visitor& visitor;
+};
+
+template<typename Visitor>
+inline
+apply_visitor_delayed<Visitor> apply_visitor(Visitor& visitor)
+{
+    return apply_visitor_delayed<Visitor>(visitor);
+}
     
 }
-
 
 #define PURE_VISITABLE(Visitor)\
 using base_visitor__ = Visitor;\
