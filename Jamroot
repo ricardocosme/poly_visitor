@@ -1,0 +1,41 @@
+
+local boost = /Users/rcosme/install/boost-1.60.0 ;
+
+project poly_visitor
+  : requirements
+    <cxxflags>-std=c++11
+    <include>include
+    <include>$(boost)/include
+    <include>$(loki)/include
+    <include>$(asl)
+  : default-build
+    <optimization>speed
+    <variant>release
+  ;
+
+exe demo_simple
+  : demo/simple.cpp
+  ;
+explicit demo_simple ;
+
+exe demo_generic_visit
+  : demo/generic_visit.cpp
+  ;
+explicit demo_generic_visit ;
+
+exe demo_visitor_with_state
+  : demo/visitor_with_state.cpp
+  ;
+explicit demo_visitor_with_state ;
+
+exe test_const
+  : test/const.cpp
+  ;
+explicit test_const ;
+
+install stage
+  : demo_simple
+    demo_generic_visit
+    demo_visitor_with_state
+    test_const
+  ;
