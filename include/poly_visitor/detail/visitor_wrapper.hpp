@@ -1,22 +1,23 @@
 #pragma once
 
-#include "poly_visitor/detail/visitor_visitable.hpp"
-#include "poly_visitor/detail/visitor_const_visitable.hpp"
+#include "poly_visitor/detail/visitor.hpp"
+#include "poly_visitor/detail/visitor_const.hpp"
 
 namespace poly_visitor { namespace detail {
 
-template<typename DV, typename UserBaseVisitor>
-struct visitor_visitable_wrapper_base : visitor_visitable<
-    UserBaseVisitor::types::size,
-    typename UserBaseVisitor::types, DV, UserBaseVisitor>
+template<typename VisitorWrapper,
+         typename BaseVisitor>
+struct visitor_wrapper_base : visitor<
+    BaseVisitor::types::size,
+    typename BaseVisitor::types, VisitorWrapper, BaseVisitor>
 {};
 
-template<typename Visitor, typename UserBaseVisitor>
-struct visitor_visitable_wrapper : visitor_visitable_wrapper_base<
-    visitor_visitable_wrapper<Visitor, UserBaseVisitor>,
-    UserBaseVisitor>
+template<typename Visitor, typename BaseVisitor>
+struct visitor_wrapper : visitor_wrapper_base<
+    visitor_wrapper<Visitor, BaseVisitor>,
+    BaseVisitor>
 {
-    visitor_visitable_wrapper(Visitor& uvisitor)
+    visitor_wrapper(Visitor& uvisitor)
         : uvisitor(uvisitor)
     {}
     
@@ -29,18 +30,18 @@ struct visitor_visitable_wrapper : visitor_visitable_wrapper_base<
     Visitor& uvisitor;
 };
  
-template<typename DV, typename UserBaseVisitor>
-struct visitor_const_visitable_wrapper_base : visitor_const_visitable<
-    UserBaseVisitor::types::size,
-    typename UserBaseVisitor::types, DV, UserBaseVisitor>
+template<typename VisitorWrapper, typename BaseVisitor>
+struct visitor_const_wrapper_base : visitor_const<
+    BaseVisitor::types::size,
+    typename BaseVisitor::types, VisitorWrapper, BaseVisitor>
 {};
         
-template<typename Visitor, typename UserBaseVisitor>
-struct visitor_const_visitable_wrapper : visitor_const_visitable_wrapper_base<
-    visitor_const_visitable_wrapper<Visitor, UserBaseVisitor>,
-    UserBaseVisitor>
+template<typename Visitor, typename BaseVisitor>
+struct visitor_const_wrapper : visitor_const_wrapper_base<
+    visitor_const_wrapper<Visitor, BaseVisitor>,
+    BaseVisitor>
 {
-    visitor_const_visitable_wrapper(Visitor& uvisitor)
+    visitor_const_wrapper(Visitor& uvisitor)
         : uvisitor(uvisitor)
     {}
     

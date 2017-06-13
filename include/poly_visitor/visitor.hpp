@@ -16,7 +16,7 @@ template<typename Visitor, typename Visitable>
 inline
 void apply_visitor(Visitor&& visitor, Visitable& visitable)
 {
-    auto wrapper = detail::visitor_visitable_wrapper<
+    auto wrapper = detail::visitor_wrapper<
         Visitor,
         typename Visitable::base_visitor__>(visitor);
     visitable.accept(wrapper);
@@ -26,7 +26,7 @@ template<typename Visitor, typename Visitable>
 inline
 void apply_visitor(Visitor&& visitor, const Visitable& visitable)
 {
-    auto wrapper = detail::visitor_const_visitable_wrapper<
+    auto wrapper = detail::visitor_const_wrapper<
         Visitor,
         typename Visitable::base_visitor__>(visitor);
     visitable.accept(wrapper);
@@ -55,15 +55,15 @@ apply_visitor_delayed<Visitor> apply_visitor(Visitor& visitor)
     
 }
 
-#define PURE_VISITABLE(Visitor)\
-using base_visitor__ = Visitor;\
-virtual void accept(Visitor&)  = 0;\
-virtual void accept(Visitor&) const = 0;
+#define PURE_VISITABLE(BASE_VISITOR)\
+using base_visitor__ = BASE_VISITOR;\
+virtual void accept(BASE_VISITOR&) = 0;\
+virtual void accept(BASE_VISITOR&) const = 0;
 
-#define VISITABLE(Visitor)\
-using base_visitor__ = Visitor;\
-virtual void accept(Visitor& visitor)\
+#define VISITABLE(BASE_VISITOR)\
+using base_visitor__ = BASE_VISITOR;\
+virtual void accept(BASE_VISITOR& visitor)\
 {return visitor.visit(*this);}\
-virtual void accept(Visitor& visitor) const\
+virtual void accept(BASE_VISITOR& visitor) const\
 {return visitor.visit(*this);}
 

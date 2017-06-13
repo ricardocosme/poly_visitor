@@ -1,5 +1,6 @@
 #include "poly_visitor/visitor.hpp"
 #include <iostream>
+#include <typeinfo>
 
 struct Cat;
 struct Cockatiel;
