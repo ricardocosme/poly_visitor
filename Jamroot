@@ -11,6 +11,7 @@ project poly_visitor
   : default-build
     <optimization>speed
     <variant>release
+    <warnings>all
   ;
 
 exe demo_simple
@@ -28,14 +29,38 @@ exe demo_visitor_with_state
   ;
 explicit demo_visitor_with_state ;
 
+exe demo_visitor_with_return
+  : demo/visitor_with_return.cpp
+  ;
+explicit demo_visitor_with_return ;
+
+exe demo_visitor_delayed
+  : demo/visitor_delayed.cpp
+  ;
+explicit demo_visitor_delayed ;
+
 exe test_const
   : test/const.cpp
   ;
 explicit test_const ;
 
+exe test_return_movable
+  : test/return_movable.cpp
+  ;
+explicit test_return_movable ;
+
+exe test_return_not_movable
+  : test/return_not_movable.cpp
+  ;
+explicit test_return_not_movable ;
+
 install stage
   : demo_simple
     demo_generic_visit
     demo_visitor_with_state
+    demo_visitor_with_return
+    demo_visitor_delayed
     test_const
+    test_return_movable
+    test_return_not_movable
   ;

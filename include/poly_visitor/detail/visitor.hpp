@@ -1,5 +1,7 @@
 #pragma once
 
+#include <boost/any.hpp>
+
 namespace poly_visitor { namespace detail {
 
 template<int Idx,
@@ -16,10 +18,10 @@ struct visitor<0, Visitables, VisitorWrapper, UserBaseVisitor>
 {
     using Visitable = typename Visitables::template type<0>;
     using UserBaseVisitor::visit;
-    virtual void visit(Visitable& o)
+    virtual boost::any visit(Visitable& o)
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
-    virtual void visit(const Visitable& o)
-    { /* shut up the compiler */ }
+    virtual boost::any visit(const Visitable& o)
+    { return boost::any{}; /* shut up the compiler */ }
 };
 
 template<int Idx,
@@ -31,10 +33,10 @@ struct visitor
 {
     using Visitable = typename Visitables::template type<Idx-1>;
     using UserBaseVisitor::visit;
-    virtual void visit(Visitable& o)
+    virtual boost::any visit(Visitable& o)
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
-    virtual void visit(const Visitable& o)
-    { /* shut up the compiler */ }
+    virtual boost::any visit(const Visitable& o)
+    { return boost::any{}; /* shut up the compiler */ }
 };
 
 }}

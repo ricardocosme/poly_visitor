@@ -4,20 +4,21 @@
 struct Cat;
 struct Cockatiel;
 
-using base_visitor = poly_visitor::base_visitor<
-    poly_visitor::TypeList<Cat, Cockatiel>>;
+using base_visitor = poly_visitor::base_visitor<Cat, Cockatiel>;
 
 struct Animal
-{ PURE_VISITABLE(base_visitor); };
+{ PURE_VISITABLE(base_visitor) };
 
 struct Cat : Animal
-{ VISITABLE(base_visitor); };
+{ VISITABLE(base_visitor) };
 
 struct Cockatiel : Animal
-{ VISITABLE(base_visitor); };
+{ VISITABLE(base_visitor) };
 
 struct Speak
 {
+    using result_type = void;
+    
     Speak(std::string& out) : out(out) {}
     std::string& out;
     
