@@ -99,7 +99,7 @@ struct visitor
 * **Constness:** const visitables are supported.
 
 ## Depends
-Poly Visitor it's a header only library.
+Poly Visitor is a header only library.
 * Compiler supporting C++11.
 * Tested with:
   * Apple LLVM version 8.1.0 (clang-802.0.42) (based on clang ??)
