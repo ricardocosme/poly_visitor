@@ -22,6 +22,7 @@ struct visitor<0, Visitables, VisitorWrapper, UserBaseVisitor>
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
     virtual boost::any visit(const Visitable& o)
     { return boost::any{}; /* shut up the compiler */ }
+    virtual ~visitor() = default;
 };
 
 template<int Idx,
@@ -37,6 +38,7 @@ struct visitor
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
     virtual boost::any visit(const Visitable& o)
     { return boost::any{}; /* shut up the compiler */ }
+    virtual ~visitor() = default;
 };
 
 }}

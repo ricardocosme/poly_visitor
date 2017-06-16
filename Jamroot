@@ -19,53 +19,36 @@ project poly_visitor
     <warnings>all
   ;
 
-exe demo_simple
-  : demo/simple.cpp
-  ;
-explicit demo_simple ;
+rule exe-aux ( type : name : reqs * : deps * )
+{
+    exe $(name)
+        : $(type)/$(name).cpp
+        : $(reqs)
+          <include>$(type)
+        : $(deps)
+        ;
+    explicit $(name) ;
+}
 
-exe demo_generic_visit
-  : demo/generic_visit.cpp
-  ;
-explicit demo_generic_visit ;
-
-exe demo_visitor_with_state
-  : demo/visitor_with_state.cpp
-  ;
-explicit demo_visitor_with_state ;
-
-exe demo_visitor_with_return
-  : demo/visitor_with_return.cpp
-  ;
-explicit demo_visitor_with_return ;
-
-exe demo_visitor_delayed
-  : demo/visitor_delayed.cpp
-  ;
-explicit demo_visitor_delayed ;
-
-exe test_const
-  : test/const.cpp
-  ;
-explicit test_const ;
-
-exe test_return_movable
-  : test/return_movable.cpp
-  ;
-explicit test_return_movable ;
-
-exe test_return_not_movable
-  : test/return_not_movable.cpp
-  ;
-explicit test_return_not_movable ;
+exe-aux demo : simple ;
+exe-aux demo : generic_visit ;
+exe-aux demo : visitor_with_state ;
+exe-aux demo : visitor_with_return ;
+exe-aux demo : visitor_delayed ;
+    
+exe-aux test : const ;
+exe-aux test : return_movable ;
+exe-aux test : return_not_movable ;
+exe-aux test : benchmark_dynamic_cast ;
 
 install stage
-  : demo_simple
-    demo_generic_visit
-    demo_visitor_with_state
-    demo_visitor_with_return
-    demo_visitor_delayed
-    test_const
-    test_return_movable
-    test_return_not_movable
+  : simple
+    generic_visit
+    visitor_with_state
+    visitor_with_return
+    visitor_delayed
+    const
+    return_movable
+    return_not_movable
+    benchmark_dynamic_cast
   ;

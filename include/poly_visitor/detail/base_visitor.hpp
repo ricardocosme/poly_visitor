@@ -13,6 +13,7 @@ struct base_visitor<0, Visitables>
     using Visitable = typename Visitables::template type<0>;
     virtual boost::any visit(Visitable&) = 0;
     virtual boost::any visit(const Visitable&) = 0;
+    virtual ~base_visitor() = default;
 };
 
 template<int I, typename Visitables>
@@ -22,6 +23,7 @@ struct base_visitor : base_visitor<I-1, Visitables>
     using base_visitor<I-1, Visitables>::visit;
     virtual boost::any visit(Visitable&) = 0;
     virtual boost::any visit(const Visitable&) = 0;
+    virtual ~base_visitor() = default;
 };
 
 }}
