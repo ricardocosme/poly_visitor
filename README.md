@@ -1,26 +1,27 @@
 # Poly Visitor
 
-Poly Visitor is a C++ generic component to use the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) at
+Poly Visitor is a C++11 generic component to use the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) at
 runtime polymorphic solutions. It's a safe, efficient and concise
 solution to implement [cyclic visitors](#why-cyclic-visitors-instead-of-acyclic-visitors) in the Object Oriented(OO)
 paradigm. 
 
-## Why this?
-In the OO world, virtual functions is the key concept to achieve runtime polymorphism. 
-These special functions are member functions of a base class. To add new polymorphic operations, 
+## Why use Poly Visitor?
+In the OO world, adding new polymorphic operations is an intrusive operation and  
 all the class hierarchy must be modified and naturally the world must be recompiled. 
 In reality, it is a good thing to separate types from operations, the algorithms 
 may be free to live independently of the objects. This is an important lesson from Generic Programming(GP) paradigm.
 Another question related to the OO world, is that is not uncommon the necessity of a closed type switch to take the concrete type back when all the user have in hands is a base class. It's not easy to write "perfect bases" which
 satisfies all the needs without to comeback to the concrete type.
 
-Poly Visitor may help the design of OO based solutions when the class hierarchy is:
-1. Stable(without addition of new classes frequently);
-1. Composed by a set of know derived classes.
+Poly Visitor may help the design of OO based solutions when:
+1. The class hierarchy is stable - without addition of new classes frequently;
+1. The class hierarchy is composed by a set of know derived classes;
+1. New operations are added from time to time;
+1. Concrete types must be obtained at some point.
 
 ### Why safe?
 - The compiler checks if all types of the hierarchy were considered in the visitor implementation. [More about](#what-about-type-switching-with-dynamic_cast)
-- Poly Visitor builds the necessary machinery to use the visitor pattern using metaprogramming techniques. [More about](#what-about-handwritten-vistor-pattern)
+- Poly Visitor builds up the infra-structure to use the visitor pattern using metaprogramming techniques. [More about](#what-about-handwritten-vistor-pattern)
 
 ### Why efficient?
 - Poly Visitor only needs one more extra virtual call.
@@ -97,28 +98,35 @@ struct visitor
 ```    
 * **Constness:** const visitables are supported.
 
+## Depends
+* Compiler supporting C++11.
+  * Tested with:
+    * Apple LLVM version 8.1.0 (clang-802.0.42) (based on clang ??)
+    * GCC 4.8.2
+* [Boost.Any](http://www.boost.org/doc/libs/1_64_0/doc/html/any.html)
+
 ## F.A.Q.
 
 #### Why Cyclic Visitors instead of Acyclic Visitors?
 Cyclic visitors has one drawback: each class of the hierarchy(visitables) knows the name of all the others. The base class knows the name of all derived classes. It's seems bad but in reality the dependency it's only by the name. Yes, if a new derived class is added, the world is recompiled, but it was already said that it's expected a good level of stability in the hierarchy. The acyclic visitor solve this problem. Nevertheless, there are two advantages in favor of cyclic version:
 * The compiler throws an error when a new class is added and some visitor doesn't implement an action to this new type. That it's great. The acyclic version can only do something at runtime;
-* The cyclic is a bit faster because the acyclic version typically needs a dynamic_cast to discover the approriate visitor.
+* The cyclic version is a bit faster because the acyclic version typically needs a dynamic_cast to discover the approriate visitor.
 
 #### What about type switching with dynamic_cast?
-There is better solutions. Type switching using dynamic_cast to achieve the concrete type is error prone, unsafe and unefficient. First, it's a handwritten solution.
+There are better solutions. Type switching using dynamic_cast to achieve the concrete type is error prone, unsafe and inefficient. First, it's a handwritten solution.
 - A dynamic_cast to a base is greed. Any cast after to a concrete type will never be called;
 - The compiler does't complain if the programmer forgot to consider all the set of types;
-- The world change. The hierarchy may be stable but this isn't mean that it will never be changed. A new derived class probably indicates that the programmer must be consider the new type at all places with type switch. The compiler will not help. Bugs to runtime;
-- The dynamic_cast is not a free operation. It may be between O(n) e O(1) and here the programmer needs a bundle of them.
+- The world change. The hierarchy may be stable but this isn't mean that it will never be changed. A new derived class probably indicates that the programmer must be consider the new type at all places with type switching. The compiler will not help. Bugs to runtime;
+- The dynamic_cast is not a free operation and here the programmer needs a bundle of them. Take a look at `test/benchmark_dynamic_cast.cpp`.
 
 #### What about handwritten vistor pattern?
-Handwritten solutions of the visitor pattern are error prone and boring. It's necessary a machinery to implement the pattern. A bundle of classes linked to each other through single and multiple inheritance as well as a bit of glue code. Poly Visitor builds the machinery using metaprogramming techniques.
+Handwritten solutions of the visitor pattern are error prone and boring. It's necessary a machinery to implement the pattern. A bundle of classes linked to each other through single and multiple inheritance as well as a bit of glue code. Poly Visitor builds up the infra-structure using metaprogramming techniques.
 
 #### What is the overhead?
 Poly Visitor only needs one more extra virtual call, but the programmer must be in mind the following when using the return of a visitor:
-  * It pays for the dynamic allocation of the returned object under the hood;
-  * The object it will be moved to the outside of the visitor if possible(move constructor), otherwise it will be copied.
-If these costs are not negligible, the programmer may use a visitor with state and lvalue references to returns things, for example:
+  * It pays for the dynamic allocation of the returned object under the hood. Poly Visitor uses `boost::any` to make the magic happen.;
+  * The object it will be moved to the outside of the visitor if possible(calling the move constructor) otherwise it will be copied.
+If this cost are not negligible, the programmer may use a visitor with state and lvalue references to returns things, for example:
 ```c++
 struct visitor
 {
