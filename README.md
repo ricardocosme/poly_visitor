@@ -49,8 +49,6 @@ struct Cockatiel : Animal
 
 struct Speak
 {
-    using result_type = void;
-    
     void operator()(const Cat&) const 
     { std::cout << "Meow..." << std::endl; }    
     void operator()(const Cockatiel&) const
@@ -70,10 +68,8 @@ int main()
 ```c++
 struct visitor
 {
-    using result_type = void;
-
     template<typename T>
-    result_type operator()(T&& o)
+    void operator()(T&& o)
     { /* do something */ }
 };
 ```
@@ -81,11 +77,9 @@ struct visitor
 ```c++
 struct visitor
 {
-    using result_type = std::string;
-
     template<typename T>
-    result_type operator()(T&&)
-    { return std::string("something"); }
+    std::string operator()(T&&)
+    { return "something"; }
 };
 ```
 * **Delayed visitation:** an easy and concise way to use visitors on sequences of visitables:
@@ -141,12 +135,10 @@ If this cost are not negligible, the programmer may use a visitor with state and
 ```c++
 struct visitor
 {
-    using result_type = std::string;
-    
     visitor(std::string& out) : out(out) {}
     std::string& out;
 
-    result_type operator()(const DerivedType&)
+    void operator()(const DerivedType&)
     { out = "something"; }
 
     /* ... another overloads */
