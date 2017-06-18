@@ -1,4 +1,4 @@
-# Poly Visitor
+# Poly Visitor [![Build Status](https://travis-ci.org/ricardocosme/poly_visitor.svg?branch=master)](https://travis-ci.org/ricardocosme/poly_visitor)
 
 Poly Visitor is a C++11 generic component to use the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) at
 runtime polymorphic solutions. It's a safe, efficient and concise
