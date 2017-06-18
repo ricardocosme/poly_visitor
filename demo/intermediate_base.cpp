@@ -9,16 +9,16 @@ using base_visitor = poly_visitor::base_visitor
     <bird, cockatiel, eagle>;
 
 struct animal
-{ PURE_VISITABLE(base_visitor) };
+{ POLY_VISITOR_PURE_VISITABLE(base_visitor) };
 
 struct bird : animal
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct cockatiel : bird
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct eagle : bird
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct visitor
 {

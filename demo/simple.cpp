@@ -7,13 +7,13 @@ struct Cockatiel;
 using base_visitor = poly_visitor::base_visitor<Cat, Cockatiel>;
 
 struct Animal
-{ PURE_VISITABLE(base_visitor) };
+{ POLY_VISITOR_PURE_VISITABLE(base_visitor) };
 
 struct Cat : Animal
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct Cockatiel : Animal
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct Speak
 {

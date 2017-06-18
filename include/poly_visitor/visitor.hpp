@@ -22,20 +22,20 @@ inline typename std::enable_if<
     std::is_same<
         typename detail::result_of_unary_visitor<
             typename std::decay<Visitor>::type,
-            typename Visitable::base_visitor__>::type,
+            typename Visitable::poly_visitor_base_visitor>::type,
         void>::value,
         typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::base_visitor__>::type>::type
+            typename Visitable::poly_visitor_base_visitor>::type>::type
 apply_visitor(Visitor&& visitor, Visitable& visitable)
 {
-    using base_visitor = typename Visitable::base_visitor__;
+    using base_visitor = typename Visitable::poly_visitor_base_visitor;
     using result_type = typename detail::result_of_unary_visitor<
         Visitor, base_visitor>::type;
     
     auto wrapper = detail::visitor_wrapper<
         Visitor,
-        typename Visitable::base_visitor__,
+        typename Visitable::poly_visitor_base_visitor,
         result_type>(visitor);
     visitable.accept(wrapper);
     return;
@@ -46,20 +46,20 @@ inline typename std::enable_if<
     !std::is_same<
         typename detail::result_of_unary_visitor<
             typename std::decay<Visitor>::type,
-            typename Visitable::base_visitor__>::type,
+            typename Visitable::poly_visitor_base_visitor>::type,
         void>::value,
         typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::base_visitor__>::type>::type
+            typename Visitable::poly_visitor_base_visitor>::type>::type
 apply_visitor(Visitor&& visitor, Visitable& visitable)
 {
-    using base_visitor = typename Visitable::base_visitor__;
+    using base_visitor = typename Visitable::poly_visitor_base_visitor;
     using result_type = typename detail::result_of_unary_visitor<
         Visitor, base_visitor>::type;
     
     auto wrapper = detail::visitor_wrapper<
         Visitor,
-        typename Visitable::base_visitor__,
+        typename Visitable::poly_visitor_base_visitor,
         result_type>(visitor);
     
     using cast_t = typename std::conditional<
@@ -75,14 +75,14 @@ inline typename std::enable_if<
     std::is_same<
         typename detail::result_of_unary_visitor<
             typename std::decay<Visitor>::type,
-            typename Visitable::base_visitor__>::type,
+            typename Visitable::poly_visitor_base_visitor>::type,
         void>::value,
         typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::base_visitor__>::type>::type
+            typename Visitable::poly_visitor_base_visitor>::type>::type
 apply_visitor(Visitor&& visitor, const Visitable& visitable)
 {
-    using base_visitor = typename Visitable::base_visitor__;
+    using base_visitor = typename Visitable::poly_visitor_base_visitor;
     using result_type = typename detail::result_of_unary_visitor<
         Visitor, base_visitor>::type;
     
@@ -100,14 +100,14 @@ inline typename std::enable_if<
     !std::is_same<
         typename detail::result_of_unary_visitor<
             typename std::decay<Visitor>::type,
-            typename Visitable::base_visitor__>::type,
+            typename Visitable::poly_visitor_base_visitor>::type,
         void>::value,
         typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::base_visitor__>::type>::type
+            typename Visitable::poly_visitor_base_visitor>::type>::type
 apply_visitor(Visitor&& visitor, const Visitable& visitable)
 {
-    using base_visitor = typename Visitable::base_visitor__;
+    using base_visitor = typename Visitable::poly_visitor_base_visitor;
     using result_type = typename detail::result_of_unary_visitor<
         Visitor, base_visitor>::type;
     
@@ -132,7 +132,7 @@ struct apply_visitor_delayed
     template<typename Visitable>
     typename detail::result_of_unary_visitor<
         Visitor,
-        typename std::decay<Visitable>::type::element_type::base_visitor__
+        typename std::decay<Visitable>::type::element_type::poly_visitor_base_visitor
     >::type
     operator()(Visitable&& visitable) const
     {
@@ -142,7 +142,7 @@ struct apply_visitor_delayed
     template<typename Visitable>
     typename detail::result_of_unary_visitor<
         Visitor,
-        typename std::remove_pointer<Visitable>::type::base_visitor__
+        typename std::remove_pointer<Visitable>::type::poly_visitor_base_visitor
     >::type
     operator()(Visitable* visitable) const
     {
@@ -160,13 +160,13 @@ apply_visitor_delayed<Visitor> apply_visitor(Visitor& visitor)
     
 }
 
-#define PURE_VISITABLE(BASE_VISITOR)\
-using base_visitor__ = BASE_VISITOR;\
-virtual boost::any accept(BASE_VISITOR&) = 0;      \
+#define POLY_VISITOR_PURE_VISITABLE(BASE_VISITOR)\
+using poly_visitor_base_visitor = BASE_VISITOR;\
+virtual boost::any accept(BASE_VISITOR&) = 0;\
 virtual boost::any accept(BASE_VISITOR&) const = 0;
 
-#define VISITABLE(BASE_VISITOR)\
-using base_visitor__ = BASE_VISITOR;\
+#define POLY_VISITOR_VISITABLE(BASE_VISITOR)\
+using poly_visitor_base_visitor = BASE_VISITOR;\
 virtual boost::any accept(BASE_VISITOR& visitor)\
 {return visitor.visit(*this);}\
 virtual boost::any accept(BASE_VISITOR& visitor) const\

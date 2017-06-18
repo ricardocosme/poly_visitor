@@ -7,13 +7,13 @@ struct D2;
 using base_visitor = poly_visitor::base_visitor<D1, D2>;
 
 struct B
-{ PURE_VISITABLE(base_visitor) };
+{ POLY_VISITOR_PURE_VISITABLE(base_visitor) };
 
 struct D1 : B
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct D2 : B
-{ VISITABLE(base_visitor) };
+{ POLY_VISITOR_VISITABLE(base_visitor) };
 
 struct Movable
 {

@@ -15,40 +15,40 @@ using base_visitor = poly_visitor::base_visitor
     <D1, D2, D3, D4, D5, D6, D7>;
 
 struct B
-{ PURE_VISITABLE(base_visitor) };
+{ POLY_VISITOR_PURE_VISITABLE(base_visitor) };
 struct D1 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D1() = default;
 };
 struct D2 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D2() = default;
 };
 struct D3 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D3() = default;
 };
 struct D4 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D4() = default;
 };
 struct D5 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D5() = default;
 };
 struct D6 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D6() = default;
 };
 struct D7 : B
 {
-    VISITABLE(base_visitor)
+    POLY_VISITOR_VISITABLE(base_visitor)
     virtual ~D7() = default;
 };
 
