@@ -28,8 +28,8 @@ struct Movable
         return *this;
     }
     
-    Movable(Movable&&) = delete;
-    Movable& operator=(Movable&&) = delete;
+    // Movable(Movable&&) = delete;
+    // Movable& operator=(Movable&&) = delete;
 };
 
 struct Visitor
