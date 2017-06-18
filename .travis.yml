@@ -1,0 +1,11 @@
+language: cpp
+compiler:
+ - gcc
+sudo: false
+dist: trusty
+before_install:
+- wget boost_1_64_0.tar.gz
+- tar zxf boost_1_64_0.tar.gz
+- cd boost_1_64_0
+- ./bootstrap.sh
+- ./b2
