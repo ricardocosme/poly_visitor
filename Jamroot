@@ -35,6 +35,7 @@ exe-aux demo : generic_visit ;
 exe-aux demo : visitor_with_state ;
 exe-aux demo : visitor_with_return ;
 exe-aux demo : visitor_delayed ;
+exe-aux demo : intermediate_base ;
     
 exe-aux test : const ;
 exe-aux test : return_movable ;
@@ -47,6 +48,7 @@ install stage
     visitor_with_state
     visitor_with_return
     visitor_delayed
+    intermediate_base
     const
     return_movable
     return_not_movable

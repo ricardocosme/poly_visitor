@@ -31,9 +31,9 @@ struct timer
         t0 = std::chrono::high_resolution_clock::now();
     }
     timer(std::string plabel)
-        : timer()
+        : label(std::move(plabel))
     {
-        label = std::move(plabel);
+        t0 = std::chrono::high_resolution_clock::now();
     }
     ~timer()
     {
