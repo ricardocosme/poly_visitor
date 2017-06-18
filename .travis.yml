@@ -1,11 +1,12 @@
 language: cpp
 compiler:
- - gcc
-sudo: false
+ - clang
 dist: trusty
 before_install:
-- wget https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz
-- tar zxf boost_1_64_0.tar.gz
-- cd boost_1_64_0
+- export BOOST=boost_1_64_0
+- wget https://dl.bintray.com/boostorg/release/1.64.0/source/${BOOST}.tar.gz
+- tar zxf ${BOOST}.tar.gz
+- cd ${BOOST}/tools/build
 - ./bootstrap.sh
-- ./b2
+- cd ../../..
+- BOOST_ROOT=${BOOST} ${BOOST}/tools/build/b2

@@ -88,19 +88,19 @@ int main(int argc, char **argv)
         timer<std::chrono::microseconds> t("dynamic_cast");
         for(std::size_t i(0); i < n; ++i)
         {
-            if(auto p = dynamic_cast<D1*>(&base))
+            if(dynamic_cast<D1*>(&base))
             {}
-            else if(auto p = dynamic_cast<D2*>(&base))
+            else if(dynamic_cast<D2*>(&base))
             {}
-            else if(auto p = dynamic_cast<D3*>(&base))
+            else if(dynamic_cast<D3*>(&base))
             {}
-            else if(auto p = dynamic_cast<D4*>(&base))
+            else if(dynamic_cast<D4*>(&base))
             {}
-            else if(auto p = dynamic_cast<D5*>(&base))
+            else if(dynamic_cast<D5*>(&base))
             {}
-            else if(auto p = dynamic_cast<D6*>(&base))
+            else if(dynamic_cast<D6*>(&base))
             {std::cout << "d6"<< std::endl;}
-            else if(auto p = dynamic_cast<D7*>(&base))
+            else if(dynamic_cast<D7*>(&base))
             {}
         }
     }

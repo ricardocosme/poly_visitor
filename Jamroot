@@ -1,18 +1,18 @@
 import os ;
 
-local boost_path = [ os.environ BOOST_PATH ] ;
-if ! $(boost_path)
+local boost_root_path = [ os.environ BOOST_ROOT ] ;
+if ! $(boost_root_path)
 {
-    boost_path = "/Users/rcosme/install/boost-1.60.0" ;
+    boost_root_path = "../boost_1_60_0" ;
 }
+
+use-project boost : $(boost_root_path) ;
 
 project poly_visitor
   : requirements
     <cxxflags>-std=c++11
     <include>include
-    <include>$(boost_path)/include
-    <include>$(loki)/include
-    <include>$(asl)
+    <use>/boost//headers
   : default-build
     <optimization>speed
     <variant>release
