@@ -35,7 +35,7 @@ struct result_of_unary_visitor
         boost::mpl::count<returns, type>::value
         == boost::mpl::size<returns>::type::value,
         "The visitor is mixing return types. Please, check if all visit "\
-        "functions has the same return type.");
+        "functions have the same return type.");
 };
 
 }}
