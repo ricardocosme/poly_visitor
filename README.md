@@ -105,7 +105,7 @@ Poly Visitor is a header only library.
 * [Boost.MPL](http://www.boost.org/doc/libs/1_64_0/libs/mpl/doc/index.html)
 
 ## Demos and tests
-1. Compile with (Boost.Build)[http://www.boost.org/build/]:
+1. Compile with [Boost.Build](http://www.boost.org/build/):
 ```
 b2 -sBOOST_PATH=$(BOOST_INSTALL_PATH)
 ```
