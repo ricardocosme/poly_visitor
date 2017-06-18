@@ -99,6 +99,7 @@ Poly Visitor is a header only library.
   * Apple LLVM version 8.1.0 (clang-802.0.42) (based on clang ??)
   * GCC 4.8.2
 * [Boost.Any](http://www.boost.org/doc/libs/1_64_0/doc/html/any.html)
+* [Boost.MPL](http://www.boost.org/doc/libs/1_64_0/libs/mpl/doc/index.html)
 
 ## Demos and tests
 1. Compile with (Boost.Build)[http://www.boost.org/build/]:
