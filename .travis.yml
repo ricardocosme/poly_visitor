@@ -4,7 +4,7 @@ compiler:
 sudo: false
 dist: trusty
 before_install:
-- wget boost_1_64_0.tar.gz
+- wget https://dl.bintray.com/boostorg/release/1.64.0/source/boost_1_64_0.tar.gz
 - tar zxf boost_1_64_0.tar.gz
 - cd boost_1_64_0
 - ./bootstrap.sh
