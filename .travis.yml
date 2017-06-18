@@ -1,5 +1,6 @@
 language: cpp
 compiler:
+ - gcc
  - clang
 dist: trusty
 before_install:
@@ -9,4 +10,5 @@ before_install:
 - cd ${BOOST}/tools/build
 - ./bootstrap.sh
 - cd ../../..
-- BOOST_ROOT=${BOOST} ${BOOST}/tools/build/b2
+script:
+- BOOST_ROOT=${BOOST} ${BOOST}/tools/build/b2 toolset=$CC
