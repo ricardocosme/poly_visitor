@@ -17,8 +17,6 @@ struct Cockatiel : Animal
 
 struct Speak
 {
-    using result_type = void;
-    
     Speak(std::string& out) : out(out) {}
     std::string& out;
     

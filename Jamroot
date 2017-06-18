@@ -41,6 +41,7 @@ exe-aux test : const ;
 exe-aux test : return_movable ;
 exe-aux test : return_not_movable ;
 exe-aux test : benchmark_dynamic_cast ;
+exe-aux test : delayed ;
 
 install stage
   : simple
@@ -53,4 +54,5 @@ install stage
     return_movable
     return_not_movable
     benchmark_dynamic_cast
+    delayed
   ;

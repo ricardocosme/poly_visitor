@@ -22,8 +22,6 @@ struct eagle : bird
 
 struct visitor
 {
-    using result_type = void;
-    
     void operator()(const bird&) 
     { std::cout << "bird" << std::endl; }
     void operator()(const cockatiel&) 

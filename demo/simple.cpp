@@ -17,8 +17,6 @@ struct Cockatiel : Animal
 
 struct Speak
 {
-    using result_type = void;
-    
     void operator()(const Cat&) const 
     { std::cout << "Meow..." << std::endl; }    
     void operator()(const Cockatiel&) const

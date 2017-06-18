@@ -34,10 +34,8 @@ struct Movable
 
 struct Visitor
 {
-    using result_type = Movable;
-
     template<typename T>
-    result_type operator()(T&&)
+    Movable operator()(T&&)
     {
         Movable m;
         return m;
@@ -49,4 +47,12 @@ int main()
     D2 o;
     B& base = o;
     poly_visitor::apply_visitor(Visitor{}, base);
+    Visitor visitor;
+    poly_visitor::apply_visitor(visitor, base);
+    {
+        const B& base = o;
+        poly_visitor::apply_visitor(Visitor{}, base);
+        Visitor visitor;
+        poly_visitor::apply_visitor(visitor, base);
+    }
 }

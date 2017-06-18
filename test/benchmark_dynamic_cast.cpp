@@ -54,20 +54,19 @@ struct D7 : B
 
 struct Visitor
 {
-    using result_type = void;
-    result_type operator()(const D1&) const
+    void operator()(const D1&) const
     {}
-    result_type operator()(const D2&) const
+    void operator()(const D2&) const
     {}
-    result_type operator()(const D3&) const
+    void operator()(const D3&) const
     {}
-    result_type operator()(const D4&) const
+    void operator()(const D4&) const
     {}
-    result_type operator()(const D5&) const
+    void operator()(const D5&) const
     {}
-    result_type operator()(const D6&) const
+    void operator()(const D6&) const
     {std::cout << "d6"<< std::endl;}
-    result_type operator()(const D7&) const
+    void operator()(const D7&) const
     {}
 };
 

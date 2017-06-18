@@ -17,11 +17,9 @@ struct Cockatiel : Animal
 
 struct Speak
 {
-    using result_type = std::string;
-
-    result_type operator()(const Cat&) const
+    std::string operator()(const Cat&) const
     { return "Meow..."; }
-    result_type operator()(const Cockatiel&) const
+    std::string operator()(const Cockatiel&) const
     { return "Fiui!"; }
 };
 

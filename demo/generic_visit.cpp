@@ -18,8 +18,6 @@ struct Cockatiel : Animal
 
 struct TypeOf
 {
-    using result_type = void;
-    
     template<typename Animal>
     void operator()(Animal&& animal)
     { std::cout << typeid(animal).name() << std::endl; }    
