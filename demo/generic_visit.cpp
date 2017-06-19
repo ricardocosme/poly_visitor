@@ -28,4 +28,11 @@ int main()
     Cockatiel bird;
     Animal& animal = bird;
     poly_visitor::apply_visitor(TypeOf{}, animal);
+
+    //C++14 generic lambda
+    // poly_visitor::apply_visitor(
+    //     [](auto&& o)
+    //     {
+    //         std::cout << typeid(o).name() << std::endl;
+    //     }, animal);
 }

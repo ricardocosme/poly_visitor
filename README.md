@@ -73,6 +73,14 @@ struct visitor
     { /* do something */ }
 };
 ```
+* **Lambdas (C++14):** generic visits with lambdas, for example:
+```c++
+    poly_visitor::apply_visitor(
+    [](auto&& o)
+    {
+        std::cout << typeid(o).name() << std::endl;
+    }, visitable);
+```
 * **Return of anything copyable:** a visitor can return anything that is copyable with no need to change anything in visitable classes:
 ```c++
 struct visitor
