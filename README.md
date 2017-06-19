@@ -1,4 +1,4 @@
-# Poly Visitor
+# Poly Visitor [![Build Status](https://travis-ci.org/ricardocosme/poly_visitor.svg?branch=master)](https://travis-ci.org/ricardocosme/poly_visitor)
 
 Poly Visitor is a C++11 generic component to use the [visitor pattern](https://en.wikipedia.org/wiki/Visitor_pattern) at
 runtime polymorphic solutions. It's a safe, efficient and concise
@@ -113,7 +113,7 @@ Poly Visitor is a header only library.
 * [Boost.MPL](http://www.boost.org/doc/libs/1_64_0/libs/mpl/doc/index.html)
 
 ## Demos and tests
-1. Compile with (Boost.Build)[http://www.boost.org/build/]:
+1. Compile with [Boost.Build](http://www.boost.org/build/):
 ```
 b2 -sBOOST_PATH=$(BOOST_INSTALL_PATH)
 ```
