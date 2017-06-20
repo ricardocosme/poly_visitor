@@ -159,7 +159,7 @@ struct visitor
 ```
 
 #### Why poly visitor is concise?
-The classic C++ runtime polymorphism is an intrusive solution with inheritance and member functions. It's not very easy to put code to use the visitor pattern in the class hierarchy and visitors without messing the things. The mission is more difficult when it is desirable to guarantee features like generic visitors, visitors with return of any type and compile time checking. Poly Visitor demands a minimum code from the user to setup the class hierarchy, to write visitors and visits.
+The classic C++ runtime polymorphism is an intrusive solution with inheritance and member functions. It's not very easy to put code to use the visitor pattern in the class hierarchy and visitors without messing the things. The mission is more difficult when it is desirable to guarantee features like visitors with function templates, visitors with return of any type and compile time checking. Poly Visitor demands a minimum code from the user to setup the class hierarchy, to write visitors and visits.
 
 
 ## Acknowledgements
