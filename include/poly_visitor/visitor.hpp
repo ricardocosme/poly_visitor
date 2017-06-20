@@ -1,20 +1,20 @@
 #pragma once
 
-#include "poly_visitor/type_list.hpp"
 #include "poly_visitor/detail/base_visitor.hpp"
 #include "poly_visitor/detail/visitor_wrapper.hpp"
 #include "poly_visitor/detail/result_of_visitor.hpp"
 
 #include <boost/any.hpp>
+#include <boost/mpl/vector.hpp>
+
 #include <type_traits>
 
 namespace poly_visitor {
     
-template<typename... Types>
-struct base_visitor : detail::base_visitor<TypeList<Types...>::size,
-                                           TypeList<Types...>>
+template<typename... Visitables>
+struct base_visitor : detail::base_visitor_hierarchy<Visitables...>
 {
-    using types = TypeList<Types...>;
+    using types = boost::mpl::vector<Visitables...>;
 };
 
 template<typename Visitor, typename Visitable>

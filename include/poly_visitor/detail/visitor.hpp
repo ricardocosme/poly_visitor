@@ -1,22 +1,31 @@
 #pragma once
 
 #include <boost/any.hpp>
+#include <boost/mpl/empty_base.hpp>
+#include <boost/mpl/inherit_linearly.hpp>
 
 namespace poly_visitor { namespace detail {
 
-template<int Idx,
-         typename Visitables,
+template<typename Base,
+         typename Visitable,
          typename VisitorWrapper,
          typename UserBaseVisitor>
-struct visitor;
-
-template<typename Visitables,
-         typename VisitorWrapper,
-         typename UserBaseVisitor>
-struct visitor<0, Visitables, VisitorWrapper, UserBaseVisitor>
-    : UserBaseVisitor
+struct visitor : Base
 {
-    using Visitable = typename Visitables::template type<0>;
+    using UserBaseVisitor::visit;
+    virtual boost::any visit(Visitable& o)
+    { return static_cast<VisitorWrapper&>(*this).visit(o); }
+    virtual boost::any visit(const Visitable& o)
+    { return boost::any{}; /* shut up the compiler */ }
+    virtual ~visitor() = default;
+};
+        
+template<typename Visitable,
+         typename VisitorWrapper,
+         typename UserBaseVisitor>
+struct visitor<boost::mpl::empty_base, Visitable, VisitorWrapper,
+               UserBaseVisitor> : UserBaseVisitor
+{
     using UserBaseVisitor::visit;
     virtual boost::any visit(Visitable& o)
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
@@ -25,20 +34,14 @@ struct visitor<0, Visitables, VisitorWrapper, UserBaseVisitor>
     virtual ~visitor() = default;
 };
 
-template<int Idx,
-         typename Visitables,
-         typename VisitorWrapper,
-         typename UserBaseVisitor>
-struct visitor
-    : visitor<Idx-1, Visitables, VisitorWrapper, UserBaseVisitor>
+template<typename Visitables, typename VisitorWrapper, typename BaseVisitor>
+struct visitor_hierarchy
+    : boost::mpl::inherit_linearly<
+          Visitables,
+          detail::visitor<boost::mpl::_1, boost::mpl::_2,
+                          VisitorWrapper, BaseVisitor>
+      >::type
 {
-    using Visitable = typename Visitables::template type<Idx-1>;
-    using UserBaseVisitor::visit;
-    virtual boost::any visit(Visitable& o)
-    { return static_cast<VisitorWrapper&>(*this).visit(o); }
-    virtual boost::any visit(const Visitable& o)
-    { return boost::any{}; /* shut up the compiler */ }
-    virtual ~visitor() = default;
 };
 
 }}

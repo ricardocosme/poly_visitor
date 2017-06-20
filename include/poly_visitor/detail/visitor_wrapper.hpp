@@ -9,8 +9,7 @@ namespace poly_visitor { namespace detail {
 
 template<typename VisitorWrapper,
          typename BaseVisitor>
-struct visitor_wrapper_base : visitor<
-    BaseVisitor::types::size,
+struct visitor_wrapper_base : visitor_hierarchy<
     typename BaseVisitor::types, VisitorWrapper, BaseVisitor>
 {};
 
@@ -61,8 +60,7 @@ struct visitor_wrapper : visitor_wrapper_base<
 };
  
 template<typename VisitorWrapper, typename BaseVisitor>
-struct visitor_const_wrapper_base : visitor_const<
-    BaseVisitor::types::size,
+struct visitor_const_wrapper_base : visitor_const_hierarchy<
     typename BaseVisitor::types, VisitorWrapper, BaseVisitor>
 {};
         

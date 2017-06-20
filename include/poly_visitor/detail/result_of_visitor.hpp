@@ -20,7 +20,7 @@ struct result_of_unary
 template<typename Visitor, typename BaseVisitor>    
 struct result_of_unary_visitor
 {
-    using visitables = typename BaseVisitor::types::mpl_sequence;
+    using visitables = typename BaseVisitor::types;
     using first_visitable = typename boost::mpl::front<visitables>::type;
 
     /* This must be the result of the Visitor. */

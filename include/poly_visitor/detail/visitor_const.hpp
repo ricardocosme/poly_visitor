@@ -1,22 +1,17 @@
 #pragma once
 
 #include <boost/any.hpp>
+#include <boost/mpl/empty_base.hpp>
+#include <boost/mpl/inherit_linearly.hpp>
 
 namespace poly_visitor { namespace detail {
 
-template<int Idx,
-         typename Visitables,
+template<typename Base,
+         typename Visitable,
          typename VisitorWrapper,
          typename UserBaseVisitor>
-struct visitor_const;
-
-template<typename Visitables,
-         typename VisitorWrapper,
-         typename UserBaseVisitor>
-struct visitor_const<0, Visitables, VisitorWrapper, UserBaseVisitor>
-    : UserBaseVisitor
+struct visitor_const : Base
 {
-    using Visitable = typename Visitables::template type<0>;
     using UserBaseVisitor::visit;
     virtual boost::any visit(Visitable& o)
     { return boost::any{}; /* shut up the compiler */ }
@@ -24,14 +19,12 @@ struct visitor_const<0, Visitables, VisitorWrapper, UserBaseVisitor>
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
 };
 
-template<int Idx,
-         typename Visitables,
+template<typename Visitable,
          typename VisitorWrapper,
          typename UserBaseVisitor>
-struct visitor_const
-    : visitor_const<Idx-1, Visitables, VisitorWrapper, UserBaseVisitor>
+struct visitor_const<boost::mpl::empty_base, Visitable, VisitorWrapper,
+                     UserBaseVisitor> : UserBaseVisitor
 {
-    using Visitable = typename Visitables::template type<Idx-1>;
     using UserBaseVisitor::visit;
     virtual boost::any visit(Visitable& o)
     { return boost::any{}; /* shut up the compiler */ }
@@ -39,4 +32,14 @@ struct visitor_const
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
 };
 
+template<typename Visitables, typename VisitorWrapper, typename BaseVisitor>
+struct visitor_const_hierarchy
+    : boost::mpl::inherit_linearly<
+          Visitables,
+          detail::visitor_const<boost::mpl::_1, boost::mpl::_2,
+                                VisitorWrapper, BaseVisitor>
+      >::type
+{
+};
+        
 }}
