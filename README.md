@@ -141,8 +141,9 @@ Handwritten solutions of the visitor pattern are error prone and boring. It's ne
 
 #### What is the overhead?
 Poly Visitor only needs one more extra virtual call, but the programmer must be in mind the following when using the return of a visitor:
-  * It pays for the dynamic allocation of the returned object under the hood. Poly Visitor uses `boost::any` to make the magic happen.;
+  * It pays for the dynamic allocation of the returned object under the hood. Poly Visitor uses `boost::any` to make the magic happen;
   * The object will be moved outside of the visitor if possible(calling the move constructor) otherwise it will be copied.
+
 If this cost are not negligible, the programmer may use a visitor with state and lvalue references to return things, for example:
 ```c++
 struct visitor
