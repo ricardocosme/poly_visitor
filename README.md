@@ -101,7 +101,6 @@ struct visitor
 
 * **Result type deduction:** there is no need to declare the `result_type` of a visitor. The return type is automatically deduced and the compiler complains if not all visit functions have the same return type.
 
-* **Constness:** const visitables are supported.
 
 ## Depends
 Poly Visitor is a header only library.
