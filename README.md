@@ -107,8 +107,8 @@ struct visitor
 Poly Visitor is a header only library.
 * Compiler supporting C++11.
   * Tested with:
-    * Apple LLVM version 8.1.0 (clang-802.0.42) (based on clang ??)
-    * GCC 4.8.2
+    * Clang 3.5.0
+    * GCC 4.8.4
 * Header only dependencies:    
   * [Boost.Any](http://www.boost.org/doc/libs/1_64_0/doc/html/any.html)
   * [Boost.MPL](http://www.boost.org/doc/libs/1_64_0/libs/mpl/doc/index.html)
