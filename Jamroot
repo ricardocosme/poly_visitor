@@ -32,6 +32,7 @@ rule exe-aux ( type : name : reqs * : deps * )
 }
 
 exe-aux demo : simple ;
+exe-aux demo : match ;
 exe-aux demo : generic_visit ;
 exe-aux demo : visitor_with_state ;
 exe-aux demo : visitor_with_return ;
@@ -47,6 +48,7 @@ run test/delayed.cpp ;
 
 install stage
   : simple
+    match
     generic_visit
     visitor_with_state
     visitor_with_return

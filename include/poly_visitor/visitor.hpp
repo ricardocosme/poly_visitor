@@ -3,6 +3,7 @@
 #include "poly_visitor/detail/base_visitor.hpp"
 #include "poly_visitor/detail/visitor_wrapper.hpp"
 #include "poly_visitor/detail/result_of_visitor.hpp"
+#include "poly_visitor/detail/match_visitor.hpp"
 
 #include <boost/any.hpp>
 #include <boost/mpl/vector.hpp>
@@ -121,6 +122,16 @@ apply_visitor(Visitor&& visitor, const Visitable& visitable)
         const result_type&>::type;
     
     return boost::any_cast<cast_t>(visitable.accept(wrapper));
+}
+
+template<typename Visitable, typename... Lambdas>
+inline void
+match(Visitable&& visitable, Lambdas&&... lambdas)
+{    
+    auto visitor = detail::match_visitor<Lambdas...>
+        (std::forward<Lambdas>(lambdas)...);
+    
+    apply_visitor(std::move(visitor), std::forward<Visitable>(visitable));
 }
     
 template<typename Visitor>
