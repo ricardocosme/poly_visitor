@@ -1,5 +1,7 @@
 #pragma once
 
+#include "poly_visitor/detail/has_visit.hpp"
+
 #include <type_traits>
 #include <boost/mpl/count.hpp>
 #include <boost/mpl/transform.hpp>
@@ -23,6 +25,11 @@ struct result_of_unary_visitor
     using visitables = typename BaseVisitor::types;
     using first_visitable = typename boost::mpl::front<visitables>::type;
 
+    using _ = typename boost::mpl::fold
+        <visitables,
+         first_visitable,
+         has_visit_assert<Visitor, boost::mpl::_2>>::type;
+    
     /* This must be the result of the Visitor. */
     using type = typename result_of_unary<
         Visitor, first_visitable>::type;
