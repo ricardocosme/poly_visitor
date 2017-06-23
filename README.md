@@ -115,7 +115,7 @@ Poly Visitor is a header only library.
 ## Demos and tests
 1. Compile with [Boost.Build](http://www.boost.org/build/):
 ```
-b2 -sBOOST_PATH=$(BOOST_INSTALL_PATH)
+b2 -sBOOST_ROOT=$(BOOST_PACKAGE_PATH)
 ```
 2. Run from `stage`, for example:
 ```
