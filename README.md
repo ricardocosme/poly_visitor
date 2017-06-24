@@ -175,4 +175,4 @@ The classic C++ runtime polymorphism is an intrusive solution with inheritance a
 
 
 ## Acknowledgements
-This work is based on the implementation described in *"Modern C++ Design: Generic Programming and Design Patterns Applied"* by Andrei Alexandrescu. The interface and some ideas is based on [Boost.Variant](http://www.boost.org/doc/libs/1_64_0/doc/html/variant.html) and [Mapbox Variant](https://github.com/mapbox/variant).
+This work is based on the implementation described in *"Modern C++ Design: Generic Programming and Design Patterns Applied"* by Andrei Alexandrescu. The interface and some ideas are based on [Boost.Variant](http://www.boost.org/doc/libs/1_64_0/doc/html/variant.html) and [Mapbox Variant](https://github.com/mapbox/variant).

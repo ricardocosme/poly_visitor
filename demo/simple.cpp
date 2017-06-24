@@ -17,15 +17,15 @@ struct Cockatiel : Animal
 
 struct Speak
 {
-    void operator()(const Cat&) const 
+    void operator()(Cat&) const 
     { std::cout << "Meow..." << std::endl; }    
-    void operator()(const Cockatiel&) const
+    void operator()(Cockatiel&) const
     { std::cout << "Fiui!" << std::endl; }
 };
 
 int main()
 {
     Cockatiel bird;
-    const Animal& animal = bird;
+    Animal& animal = bird;
     poly_visitor::apply_visitor(Speak{}, animal);
 }

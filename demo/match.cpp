@@ -18,10 +18,8 @@ struct Cockatiel : Animal
 int main()
 {
     Cockatiel bird;
-    const Animal& animal = bird;
+    Animal& animal = bird;
     poly_visitor::match(animal,
-                        [](const Cat&)
-                        {std::cout << "Meow..." << std::endl;},
-                        [](const Cockatiel&)
-                        {std::cout << "Fiui!" << std::endl;});
+                        [](Cat&) {std::cout << "Meow..." << std::endl;},
+                        [](Cockatiel&) {std::cout << "Fiui!" << std::endl;});
 }
