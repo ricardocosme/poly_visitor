@@ -126,10 +126,10 @@ apply_visitor(Visitor&& visitor, const Visitable& visitable)
 
 template<typename Visitable, typename... Lambdas>
 inline void
-match(Visitable&& visitable, Lambdas&&... lambdas)
+match(Visitable&& visitable, Lambdas... lambdas)
 {    
     auto visitor = detail::match_visitor<Lambdas...>
-        (std::forward<Lambdas>(lambdas)...);
+        (std::move(lambdas)...);
     
     apply_visitor(std::move(visitor), std::forward<Visitable>(visitable));
 }

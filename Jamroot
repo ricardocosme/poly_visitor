@@ -45,6 +45,7 @@ run test/const.cpp ;
 run test/return_movable.cpp ;
 run test/return_not_movable.cpp ;
 run test/delayed.cpp ;
+run test/match_cases.cpp ;
 
 install stage
   : simple
@@ -54,9 +55,5 @@ install stage
     visitor_with_return
     visitor_delayed
     intermediate_base
-    const
-    return_movable
-    return_not_movable
     benchmark_dynamic_cast
-    delayed
   ;
