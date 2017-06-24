@@ -47,18 +47,32 @@ struct Cat : Animal
 struct Cockatiel : Animal
 { POLY_VISITOR_VISITABLE(base_visitor) };
 
+int main()
+{
+    Cockatiel bird;
+    Animal& animal = bird;
+    poly_visitor::match(animal,
+                        [](Cat&) {std::cout << "Meow..." << std::endl;},
+                        [](Cockatiel&) {std::cout << "Fiui!" << std::endl;});
+}
+```
+
+### Visitor functor
+The programmer can create a visitor type function instead of using the `poly_visitor::match()`.
+
+```c++
 struct Speak
 {
-    void operator()(const Cat&) const 
+    void operator()(Cat&) const 
     { std::cout << "Meow..." << std::endl; }    
-    void operator()(const Cockatiel&) const
+    void operator()(Cockatiel&) const
     { std::cout << "Fiui!" << std::endl; }
 };
 
 int main()
 {
     Cockatiel bird;
-    const Animal& animal = bird;
+    Animal& animal = bird;
     poly_visitor::apply_visitor(Speak{}, animal);
 }
 ```
@@ -73,13 +87,11 @@ struct visitor
     { /* do something */ }
 };
 ```
-* **Lambdas (C++14):** generic visits with lambdas, for example:
+* **Lambdas:** as visit functions through the `poly_visitor::match()` function:
 ```c++
-    poly_visitor::apply_visitor(
-    [](auto&& o)
-    {
-        std::cout << typeid(o).name() << std::endl;
-    }, visitable);
+    poly_visitor::match(base,
+                        [](Type1&) { /*...*/ },
+                        [](Type2&) { /*...*/ });
 ```
 * **Return of anything copyable:** a visitor can return anything that is copyable with no need to change anything in visitable classes:
 ```c++
@@ -163,4 +175,4 @@ The classic C++ runtime polymorphism is an intrusive solution with inheritance a
 
 
 ## Acknowledgements
-This work is based on the implementation described in *"Modern C++ Design: Generic Programming and Design Patterns Applied"* by Andrei Alexandrescu. The interface and some ideas is based on the implementation of [Boost.Variant](http://www.boost.org/doc/libs/1_64_0/doc/html/variant.html).
+This work is based on the implementation described in *"Modern C++ Design: Generic Programming and Design Patterns Applied"* by Andrei Alexandrescu. The interface and some ideas is based on [Boost.Variant](http://www.boost.org/doc/libs/1_64_0/doc/html/variant.html) and [Mapbox Variant](https://github.com/mapbox/variant).
