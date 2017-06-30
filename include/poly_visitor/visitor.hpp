@@ -5,7 +5,6 @@
 #include "poly_visitor/detail/result_of_visitor.hpp"
 #include "poly_visitor/detail/match_visitor.hpp"
 
-#include <boost/any.hpp>
 #include <boost/mpl/vector.hpp>
 
 #include <type_traits>
@@ -170,16 +169,4 @@ apply_visitor_delayed<Visitor> apply_visitor(Visitor& visitor)
 }
     
 }
-
-#define POLY_VISITOR_PURE_VISITABLE(BASE_VISITOR)\
-using poly_visitor_base_visitor = BASE_VISITOR;\
-virtual boost::any accept(BASE_VISITOR&) = 0;\
-virtual boost::any accept(BASE_VISITOR&) const = 0;
-
-#define POLY_VISITOR_VISITABLE(BASE_VISITOR)\
-using poly_visitor_base_visitor = BASE_VISITOR;\
-virtual boost::any accept(BASE_VISITOR& visitor)\
-{return visitor.visit(*this);}\
-virtual boost::any accept(BASE_VISITOR& visitor) const\
-{return visitor.visit(*this);}
 
