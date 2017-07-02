@@ -9,7 +9,7 @@ virtual boost::any accept(BASE_VISITOR&) const = 0;
 
 #define POLY_VISITOR_VISITABLE(BASE_VISITOR)\
 using poly_visitor_base_visitor = BASE_VISITOR;\
-virtual boost::any accept(BASE_VISITOR& visitor)\
+boost::any accept(BASE_VISITOR& visitor) override\
 { return visitor.visit(*this); }\
-virtual boost::any accept(BASE_VISITOR& visitor) const\
+boost::any accept(BASE_VISITOR& visitor) const override\
 { return visitor.visit(*this); }

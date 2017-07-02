@@ -13,9 +13,9 @@ template<typename Base,
 struct visitor : Base
 {
     using UserBaseVisitor::visit;
-    virtual boost::any visit(Visitable& o)
+    boost::any visit(Visitable& o) override
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
-    virtual boost::any visit(const Visitable& o)
+    boost::any visit(const Visitable& o) override
     { return boost::any{}; /* shut up the compiler */ }
     virtual ~visitor() = default;
 };
@@ -27,9 +27,9 @@ struct visitor<boost::mpl::empty_base, Visitable, VisitorWrapper,
                UserBaseVisitor> : UserBaseVisitor
 {
     using UserBaseVisitor::visit;
-    virtual boost::any visit(Visitable& o)
+    boost::any visit(Visitable& o) override
     { return static_cast<VisitorWrapper&>(*this).visit(o); }
-    virtual boost::any visit(const Visitable& o)
+    boost::any visit(const Visitable& o) override
     { return boost::any{}; /* shut up the compiler */ }
     virtual ~visitor() = default;
 };
