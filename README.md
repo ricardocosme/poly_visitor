@@ -8,16 +8,14 @@ paradigm.
 ## Why use Poly Visitor?
 In the OO world, adding new polymorphic operations is an intrusive operation and  
 all the class hierarchy must be modified and naturally the world must be recompiled. 
-In reality, it is a good thing to separate types from operations, the algorithms 
-may be free to live independently of the objects. This is an important lesson from Generic Programming(GP) paradigm.
 Another question related to the OO world, is that it is not uncommon the necessity of a closed type switch to take the concrete type back when all the user have in hands is a base class. It's not easy to write "perfect bases" which
 satisfies all the needs without to comeback to the concrete type.
 
 Poly Visitor may help the design of OO based solutions when:
-1. The class hierarchy is stable - without addition of new classes frequently;
 1. The class hierarchy is composed by a set of known derived classes;
-1. New operations are added from time to time;
-1. Concrete types must be obtained at some point.
+1. Concrete types must be obtained at some point;
+1. New operations are added from time to time.
+
 
 ### Why safe?
 - The compiler checks if all types of the hierarchy were considered in the visitor implementation. [More about](#what-about-type-switching-with-dynamic_cast)
@@ -78,6 +76,12 @@ int main()
 ```
 
 ## Features
+* **Lambdas:** as visit functions through the `poly_visitor::match()` function:
+```c++
+    poly_visitor::match(base,
+                        [](Type1&) { /*...*/ },
+                        [](Type2&) { /*...*/ });
+```
 * **Function templates:** the programmer can use function templates in the visitor. It's possible, for an example, to write a generic visitor that takes a forwarding reference:
 ```c++
 struct visitor
@@ -86,12 +90,6 @@ struct visitor
     void operator()(T&& o)
     { /* do something */ }
 };
-```
-* **Lambdas:** as visit functions through the `poly_visitor::match()` function:
-```c++
-    poly_visitor::match(base,
-                        [](Type1&) { /*...*/ },
-                        [](Type2&) { /*...*/ });
 ```
 * **Return of anything copyable:** a visitor can return anything that is copyable with no need to change anything in visitable classes:
 ```c++
@@ -110,7 +108,6 @@ struct visitor
     std::for_each(animals.cbegin(), animals.cend(),
                   poly_visitor::apply_visitor(visitor));
 ```
-
 * **Result type deduction:** there is no need to declare the `result_type` of a visitor. The return type is automatically deduced and the compiler complains if not all visit functions have the same return type.
 
 
