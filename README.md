@@ -6,9 +6,12 @@ solution to implement [cyclic visitors](#why-cyclic-visitors-instead-of-acyclic-
 paradigm. 
 
 ## Why use Poly Visitor?
-In the OO world, adding new polymorphic operations is an intrusive operation and  
-all the class hierarchy must be modified and naturally the world must be recompiled. 
-Another question related to the OO world, is that it is not uncommon the necessity of a closed type switch to take the concrete type back when all the user have in hands is a base class. It's not easy to write "perfect bases" which
+In the OO world, adding new polymorphic operations is an intrusive
+operation and all the class hierarchy must be modified and naturally
+the world must be recompiled.  Another question related to the OO
+world, is that it is not uncommon the necessity of a closed type
+switch to take the concrete type back when all the user have in hands
+is a base class. It's not easy to write "perfect bases" which
 satisfies all the needs without to comeback to the concrete type.
 
 Poly Visitor may help the design of OO based solutions when:
