@@ -5,28 +5,20 @@
 #include "poly_visitor/detail/result_of_visitor.hpp"
 #include "poly_visitor/detail/match_visitor.hpp"
 
-#include <boost/mpl/vector.hpp>
-
 #include <type_traits>
 
 namespace poly_visitor {
-    
-template<typename... Visitables>
-struct base_visitor : detail::base_visitor_hierarchy<Visitables...>
-{
-    using types = boost::mpl::vector<Visitables...>;
-};
 
 template<typename Visitor, typename Visitable>
 inline typename std::enable_if<
     std::is_same<
         typename detail::result_of_unary_visitor<
-            typename std::decay<Visitor>::type,
-            typename Visitable::poly_visitor_base_visitor>::type,
-        void>::value,
-        typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::poly_visitor_base_visitor>::type>::type
+            typename Visitable::poly_visitor_base_visitor
+        >::type,
+        void
+     >::value
+>::type
 apply_visitor(Visitor&& visitor, Visitable& visitable)
 {
     using base_visitor = typename Visitable::poly_visitor_base_visitor;
@@ -35,7 +27,7 @@ apply_visitor(Visitor&& visitor, Visitable& visitable)
     
     auto wrapper = detail::visitor_wrapper<
         Visitor,
-        typename Visitable::poly_visitor_base_visitor,
+        base_visitor,
         result_type>(visitor);
     visitable.accept(wrapper);
     return;
@@ -45,12 +37,16 @@ template<typename Visitor, typename Visitable>
 inline typename std::enable_if<
     !std::is_same<
         typename detail::result_of_unary_visitor<
-            typename std::decay<Visitor>::type,
-            typename Visitable::poly_visitor_base_visitor>::type,
-        void>::value,
-        typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::poly_visitor_base_visitor>::type>::type
+            typename Visitable::poly_visitor_base_visitor
+        >::type,
+        void
+     >::value,
+    typename detail::result_of_unary_visitor<
+        Visitor,
+        typename Visitable::poly_visitor_base_visitor
+    >::type
+>::type
 apply_visitor(Visitor&& visitor, Visitable& visitable)
 {
     using base_visitor = typename Visitable::poly_visitor_base_visitor;
@@ -59,7 +55,7 @@ apply_visitor(Visitor&& visitor, Visitable& visitable)
     
     auto wrapper = detail::visitor_wrapper<
         Visitor,
-        typename Visitable::poly_visitor_base_visitor,
+        base_visitor,
         result_type>(visitor);
     
     using cast_t = typename std::conditional<
@@ -74,12 +70,12 @@ template<typename Visitor, typename Visitable>
 inline typename std::enable_if<
     std::is_same<
         typename detail::result_of_unary_visitor<
-            typename std::decay<Visitor>::type,
-            typename Visitable::poly_visitor_base_visitor>::type,
-        void>::value,
-        typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::poly_visitor_base_visitor>::type>::type
+            typename Visitable::poly_visitor_base_visitor
+        >::type,
+        void
+    >::value
+>::type
 apply_visitor(Visitor&& visitor, const Visitable& visitable)
 {
     using base_visitor = typename Visitable::poly_visitor_base_visitor;
@@ -99,12 +95,16 @@ template<typename Visitor, typename Visitable>
 inline typename std::enable_if<
     !std::is_same<
         typename detail::result_of_unary_visitor<
-            typename std::decay<Visitor>::type,
-            typename Visitable::poly_visitor_base_visitor>::type,
-        void>::value,
-        typename detail::result_of_unary_visitor<
             Visitor,
-            typename Visitable::poly_visitor_base_visitor>::type>::type
+            typename Visitable::poly_visitor_base_visitor
+        >::type,
+        void
+     >::value,
+    typename detail::result_of_unary_visitor<
+        Visitor,
+        typename Visitable::poly_visitor_base_visitor
+    >::type
+>::type
 apply_visitor(Visitor&& visitor, const Visitable& visitable)
 {
     using base_visitor = typename Visitable::poly_visitor_base_visitor;
@@ -169,4 +169,3 @@ apply_visitor_delayed<Visitor> apply_visitor(Visitor& visitor)
 }
     
 }
-

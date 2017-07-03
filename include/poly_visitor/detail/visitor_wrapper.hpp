@@ -5,12 +5,14 @@
 
 #include <boost/any.hpp>
 
+#include <utility>
+
 namespace poly_visitor { namespace detail {
 
 template<typename VisitorWrapper,
          typename BaseVisitor>
 struct visitor_wrapper_base : visitor_hierarchy<
-    typename BaseVisitor::types, VisitorWrapper, BaseVisitor>
+    typename BaseVisitor::visitables, VisitorWrapper, BaseVisitor>
 {};
 
 template<typename Visitor, typename BaseVisitor, typename ResultType>
@@ -55,13 +57,13 @@ struct visitor_wrapper : visitor_wrapper_base<
     {
         return visit(std::forward<T>(o),
                      typename std::is_same<ResultType, void>::type{});
-    }    
+    }
     Visitor& uvisitor;
 };
  
 template<typename VisitorWrapper, typename BaseVisitor>
 struct visitor_const_wrapper_base : visitor_const_hierarchy<
-    typename BaseVisitor::types, VisitorWrapper, BaseVisitor>
+    typename BaseVisitor::visitables, VisitorWrapper, BaseVisitor>
 {};
         
 template<typename Visitor, typename BaseVisitor, typename ResultType>

@@ -22,21 +22,23 @@ struct result_of_unary
 template<typename Visitor, typename BaseVisitor>    
 struct result_of_unary_visitor
 {
-    using visitables = typename BaseVisitor::types;
+    using decayed_visitor = typename std::decay<Visitor>::type;
+    
+    using visitables = typename BaseVisitor::visitables;
     using first_visitable = typename boost::mpl::front<visitables>::type;
 
-    // using _ = typename boost::mpl::fold
-    //     <visitables,
-    //      first_visitable,
-    //      has_visit_assert<Visitor, boost::mpl::_2>>::type;
+    using _ = typename boost::mpl::fold
+        <visitables,
+         first_visitable,
+         has_visit_assert<decayed_visitor, boost::mpl::_2>>::type;
     
     /* This must be the result of the Visitor. */
     using type = typename result_of_unary<
-        Visitor, first_visitable>::type;
+        decayed_visitor, first_visitable>::type;
     
     using returns = typename boost::mpl::transform<
         visitables,
-        result_of_unary<Visitor, boost::mpl::_1>>::type;
+        result_of_unary<decayed_visitor, boost::mpl::_1>>::type;
     
     static_assert(
         boost::mpl::count<returns, type>::value

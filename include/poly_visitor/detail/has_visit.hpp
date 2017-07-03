@@ -11,7 +11,8 @@ struct has_visit : std::false_type {};
         
 template<typename Visitor, typename Visitable>
 struct has_visit<Visitor, Visitable,
-                 decltype((void)std::declval<Visitor>().operator()(Visitable()))> 
+                 decltype((void)std::declval<Visitor>()
+                          .operator()(std::declval<Visitable&>()))> 
     : std::true_type
 {};
 
@@ -22,9 +23,8 @@ struct has_visit_assert
                   "The visitor doesn't implement a visit function to a "\
                   "specific visitable. Please, check the error message "\
                   "about the instantiation of template class "\
-                  "'poly_visitor::detail::has_visit_assert<Visitor, Visitable>'. "\
-                  "Take a look if Visitor implements a visit function to "\
-                  "Visitable.");
+                  "'poly_visitor::detail::has_visit_assert<Visitor, Visitable>' "\
+                  "to figure out the type of Visitable. ");
     using type = std::size_t;
 };
                 
