@@ -26,6 +26,7 @@ apply_visitor(Visitor&& visitor, Visitable& visitable)
         Visitor, base_visitor>::type;
     
     auto wrapper = detail::visitor_wrapper<
+        detail::visitor_hierarchy,
         Visitor,
         base_visitor,
         result_type>(visitor);
@@ -54,6 +55,7 @@ apply_visitor(Visitor&& visitor, Visitable& visitable)
         Visitor, base_visitor>::type;
     
     auto wrapper = detail::visitor_wrapper<
+        detail::visitor_hierarchy,
         Visitor,
         base_visitor,
         result_type>(visitor);
@@ -82,7 +84,8 @@ apply_visitor(Visitor&& visitor, const Visitable& visitable)
     using result_type = typename detail::result_of_unary_visitor<
         Visitor, base_visitor>::type;
     
-    auto wrapper = detail::visitor_const_wrapper<
+    auto wrapper = detail::visitor_wrapper<
+        detail::visitor_const_hierarchy,
         Visitor,
         base_visitor,
         result_type>(visitor);
@@ -111,7 +114,8 @@ apply_visitor(Visitor&& visitor, const Visitable& visitable)
     using result_type = typename detail::result_of_unary_visitor<
         Visitor, base_visitor>::type;
     
-    auto wrapper = detail::visitor_const_wrapper<
+    auto wrapper = detail::visitor_wrapper<
+        detail::visitor_const_hierarchy,
         Visitor,
         base_visitor,
         result_type>(visitor);
