@@ -1,8 +1,10 @@
 #pragma once
 
+#include "poly_visitor/detail/empty_base.hpp"
+
 #include <boost/any.hpp>
-#include <boost/mpl/empty_base.hpp>
-#include <boost/mpl/inherit_linearly.hpp>
+#include <boost/mp11/algorithm.hpp>
+#include <boost/mp11/bind.hpp>
 
 namespace poly_visitor { namespace detail {
 
@@ -23,8 +25,7 @@ struct visitor : Base
 template<typename Visitable,
          typename VisitorWrapper,
          typename UserBaseVisitor>
-struct visitor<boost::mpl::empty_base, Visitable, VisitorWrapper,
-               UserBaseVisitor> : UserBaseVisitor
+struct visitor<empty_base, Visitable, VisitorWrapper, UserBaseVisitor> : UserBaseVisitor
 {
     using UserBaseVisitor::visit;
     boost::any visit(Visitable& o) override
@@ -36,11 +37,17 @@ struct visitor<boost::mpl::empty_base, Visitable, VisitorWrapper,
 
 template<typename Visitables, typename VisitorWrapper, typename BaseVisitor>
 struct visitor_hierarchy
-    : boost::mpl::inherit_linearly<
-          Visitables,
-          detail::visitor<boost::mpl::_1, boost::mpl::_2,
-                          VisitorWrapper, BaseVisitor>
-      >::type
+    : boost::mp11::mp_fold_q<
+        Visitables,
+        empty_base,
+        boost::mp11::mp_bind<
+            visitor,
+            boost::mp11::_1,
+            boost::mp11::_2,
+            VisitorWrapper,
+            BaseVisitor
+        >
+    >
 {
 };
 

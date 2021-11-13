@@ -121,8 +121,8 @@ Poly Visitor is a header only library.
     * Clang 3.5.0
     * GCC 4.8.4
 * Header only dependencies:    
-  * [Boost.Any](http://www.boost.org/doc/libs/1_64_0/doc/html/any.html)
-  * [Boost.MPL](http://www.boost.org/doc/libs/1_64_0/libs/mpl/doc/index.html)
+  * [Boost.Any](https://www.boost.org/doc/libs/1_67_0/doc/html/any.html)
+  * [Boost.MP11](https://www.boost.org/doc/libs/1_67_0/libs/mp11/doc/html/mp11.html)
 
 ## Demos and tests
 1. Compile with [Boost.Build](http://www.boost.org/build/):
@@ -175,4 +175,4 @@ The classic C++ runtime polymorphism is an intrusive solution with inheritance a
 
 
 ## Acknowledgements
-This work is based on the implementation described in *"Modern C++ Design: Generic Programming and Design Patterns Applied"* by Andrei Alexandrescu. The interface and some ideas are based on [Boost.Variant](http://www.boost.org/doc/libs/1_64_0/doc/html/variant.html) and [Mapbox Variant](https://github.com/mapbox/variant). The idea about the `match()` convenience is from [daniel-j-h](https://gist.github.com/daniel-j-h).
+This work is based on the implementation described in *"Modern C++ Design: Generic Programming and Design Patterns Applied"* by Andrei Alexandrescu. The interface and some ideas are based on [Boost.Variant](https://www.boost.org/doc/libs/1_67_0/doc/html/variant.html) and [Mapbox Variant](https://github.com/mapbox/variant). The idea about the `match()` convenience is from [daniel-j-h](https://gist.github.com/daniel-j-h).
