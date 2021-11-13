@@ -4,7 +4,7 @@ import testing ;
 local boost_root_path = [ os.environ BOOST_ROOT ] ;
 if ! $(boost_root_path)
 {
-    boost_root_path = "../boost_1_60_0" ;
+    boost_root_path = "../boost_1_67_0" ;
 }
 
 use-project boost : $(boost_root_path) ;
